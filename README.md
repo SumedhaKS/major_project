@@ -1,1 +1,1 @@
-# major_project
+It's a Dental-anomaly detection system.
