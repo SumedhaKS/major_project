@@ -4,6 +4,6 @@ const userRouter = require("./user.js")
 const modelRouter = require("./model.js")
 
 router.use('/user', userRouter);
-app.use('/model', modelRouter)
+router.use('/model', modelRouter)
 
 module.exports = router;
