@@ -1,10 +1,10 @@
 const bcrypt = require("bcrypt");
-const { PrismaClient } = require("@prisma/client")
+const { PrismaClient } = require("../generated/prisma/client")
 const prisma = new PrismaClient();
 
 
 async function main() {
-    const alice = await prisma.users.upsert({
+    const alice = await prisma.user.upsert({
         where: {
             username: "alice"
         },

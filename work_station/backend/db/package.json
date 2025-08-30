@@ -13,7 +13,10 @@
     "prisma": "^6.14.0"
   },
   "dependencies": {
-    "@prisma/client": "^6.14.0"
+    "@prisma/client": "^6.14.0",
+    "bcrypt": "^6.0.0"
   },
-  "prisma": "node prisma/seed.js"
+  "prisma": {
+    "seed": "node ./prisma/seed.js"
+  }
 }
