@@ -2,14 +2,38 @@ const express = require('express')
 require('dotenv').config();
 const bcrypt = require('bcrypt')
 const router = express.Router();
+
 const saltrounds = 10;
 const {signToken} = require('../middleware/jwt')
 const { PrismaClient } = require('../db/generated/prisma/client');    // instantiate client once in /db/client.js and re-use it 
 
+const { authMiddleware } = require("../middleware/auth")
 
-router.get('/', (req,res)=>{
+
+router.get('/', authMiddleware, (req,res)=>{            // should have auth middleware
+    const {search} = req.query;
     res.json({
-        msg: "User router healthy"
+        msg: search
+    })
+    // res.json({
+    //     msg: "User router healthy"
+    // })
+})
+
+router.post('/signup', (req,res)=>{
+    // jwt.sign should be with userId (unique id)
+    
+
+})
+
+router.post('/signin', (req,res)=>{
+
+})
+
+router.post('/:id', (req,res)=>{
+    console.log("here");
+    res.json({
+        msg: req.query.id
     })
 })
 

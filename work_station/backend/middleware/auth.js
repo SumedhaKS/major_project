@@ -1,5 +1,5 @@
 // auth middleware
-const {verifyToken} = require('./jwt');
+const { verifyToken } = require('./jwt');
 
 //function is working -> tested
 module.exports = function authMiddleware(req, res, next) {
