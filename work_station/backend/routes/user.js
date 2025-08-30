@@ -3,9 +3,8 @@ require('dotenv').config();
 const bcrypt = require('bcrypt')
 const router = express.Router();
 const saltrounds = 10;
-const { PrismaClient } = require('../db/generated/prisma/client');
 const {signToken} = require('../middleware/jwt')
-const prisma = new PrismaClient()
+const { PrismaClient } = require('../db/generated/prisma/client');    // instantiate client once in /db/client.js and re-use it 
 
 
 router.get('/', (req,res)=>{
@@ -16,12 +15,10 @@ router.get('/', (req,res)=>{
 
 router.post('/register' , async (req,res)=>{
     try{
-        const userName  = req.body.username;
-        const password  = req.body.password;
-        const role = req.body.role; 
-        role.trim() // remove any white spaces 
-        if(!userName || !password || !role)// the role has to be either doc or staff -> else the DB will throw an error 
-            return res.json({"message":"invalid username or password or role"}).status(400);
+        const { userName, password, role } = req.body;
+        // role.trim()                  remove any white spaces   -> *Not required if we use options in FE 
+        if(!userName || !password || !role)        // the role has to be either doc or staff -> else the DB will throw an error     -> not really I guess as @default(staff) is mentioned in schema
+            return res.status(400).json({"message":"invalid username or password or role"});
         //generate a random salt 
         const salt = await bcrypt.genSalt(saltrounds);
         //hash the password
@@ -31,12 +28,12 @@ router.post('/register' , async (req,res)=>{
             data:{
                 username : userName,
                 password : hashed_pwd,
-                role : role
+                role
             },
         });   
-        res.json({
+        res.status(200).json({
             "message":"new user created",
-        }).status(200);
+        });
         }
     catch (error) {
         // error handling for already username taken (username is a unique attribute in DB)
@@ -67,23 +64,23 @@ router.post('/register' , async (req,res)=>{
 
 router.post('/login', async (req, res) => {
     try {
-        const username = req.body.username;
-        const password = req.body.password;
+        const { username, password } = req.body;
+        
         const creds = await prisma.users.findUnique({
             where: { username: username }
         });
         if (!creds) {
-            return res.status(404).json({ "message": "user not found" });
+            return res.status(404).json({ message: "user not found" });
         }
-        const match = await bcrypt.compare(password, creds.hashed_password);
+        const match = await bcrypt.compare(password, creds.password);
         if (!match) {
-            return res.status(401).json({ "message": "incorrect password" });
+            return res.status(401).json({ message: "incorrect password" });
         }
-        const token = signToken({ id: creds.id, username: creds.username });
-        return res.status(200).json({ "message": "login successful", "data": {token} });
+        const token = signToken({ username: creds.username });
+        return res.status(200).json({ message: "login successful", "data": {token} });
     } catch (err) {
         console.log(`an error occurred. Error: ${err}`);
-        return res.status(500).json({ "msg": "internal server error" });
+        return res.status(500).json({ msg: "internal server error" });
     }
 });
 
