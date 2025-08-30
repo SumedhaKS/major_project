@@ -19,7 +19,7 @@ enum Role {
   staff
 }
 
-model users {
+model User {
   id       Int    @id @default(autoincrement())
   username String @unique    
   password String     
