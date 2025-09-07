@@ -2,4 +2,4 @@ const { PrismaClient } = require("./generated/prisma/client")
 
 const prisma = new PrismaClient();
 
-module.exports = prisma;    //
+module.exports = prisma;    // needs to be checked
