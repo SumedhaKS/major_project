@@ -1,0 +1,5 @@
+Create -
+
+        images/uploads => conatins all uploaded or raw files
+
+        images/analyzed => conatins all analyzed files
