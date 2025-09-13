@@ -10,28 +10,16 @@ const prisma = require("../db/client")   // instantiate client once in /db/clien
 
 const authMiddleware = require("../middleware/auth")
 
-
-router.get('/', authMiddleware, (req, res) => {            // should have auth middleware
-    const { search } = req.query;
-    res.json({
-        msg: search
-    })
-    // res.json({
-    //     msg: "User router healthy"
-    // })
-})
-
-
-const userScehma = zod.object({             // can be more strict
+const userSchema = zod.object({             // can be more strict
     username: zod.string(),                 
     password: zod.string(),
     role: zod.string()                      // role to be made optional ?
 })
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', authMiddleware,async (req, res) => {
     try {
         const { username, password, role } = req.body;
-        const validateUser = userScehma.safeParse(req.body);
+        const validateUser = userSchema.safeParse(req.body);
         // the role has to be either doc or staff -> else the DB will throw an error  -> not really I guess as @default(staff) is mentioned in schema
 
         if (!validateUser.success) {
@@ -42,7 +30,7 @@ router.post('/signup', async (req, res) => {
 
             const hashed_pwd = await bcrypt.hash(password, salt);
 
-            const newUser = await prisma.user.create({
+            await prisma.user.create({
                 data: {
                     username: username,
                     password: hashed_pwd,
@@ -66,27 +54,18 @@ router.post('/signup', async (req, res) => {
         else {
             res.status(500).json({ message: "Internal server error" });
         }
-        console.log(error);
+        // console.log(error);
     }
 
 });
-
-
-//login user
-/*
-1. check if username exists 
-2. if !exists then send him to register page 
-3. if exists then compare the pwds - bcrypt.compare()
-4. if pwd !match error else send a JWT 
-5. further redirect or other logic  
-*/
 
 const signinSchema = zod.object({
     username: zod.string(),
     password: zod.string()
 })
 
-router.post('/signin', async (req, res) => {
+//staff login
+router.post('/signin', authMiddleware,async (req, res) => {
     try {
         const { username, password } = req.body;
         const validateUser = signinSchema.safeParse(req.body);
@@ -117,4 +96,4 @@ router.post('/signin', async (req, res) => {
 });
 
 
-module.exports = router
+module.exports = router;
