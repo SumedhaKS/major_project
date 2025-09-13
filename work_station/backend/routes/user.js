@@ -8,15 +8,13 @@ const saltrounds = 10;
 const { signToken } = require('../middleware/jwt')
 const prisma = require("../db/client")   // instantiate client once in /db/client.js and re-use it 
 
-const authMiddleware = require("../middleware/auth")
-
 const userSchema = zod.object({             // can be more strict
     username: zod.string(),                 
     password: zod.string(),
     role: zod.string()                      // role to be made optional ?
 })
 
-router.post('/signup', authMiddleware,async (req, res) => {
+router.post('/signup', async (req, res) => {
     try {
         const { username, password, role } = req.body;
         const validateUser = userSchema.safeParse(req.body);
@@ -65,7 +63,7 @@ const signinSchema = zod.object({
 })
 
 //staff login
-router.post('/signin', authMiddleware,async (req, res) => {
+router.post('/signin', async (req, res) => {
     try {
         const { username, password } = req.body;
         const validateUser = signinSchema.safeParse(req.body);
