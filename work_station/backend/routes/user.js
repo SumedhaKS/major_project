@@ -21,12 +21,6 @@ router.get('/', authMiddleware, (req, res) => {            // should have auth m
     // })
 })
 
-router.post('/:id', (req, res) => {            // trial 
-    console.log("here");
-    res.json({
-        msg: req.query.id
-    })
-})
 
 const userScehma = zod.object({             // can be more strict
     username: zod.string(),                 
@@ -34,7 +28,7 @@ const userScehma = zod.object({             // can be more strict
     role: zod.string()                      // role to be made optional ?
 })
 
-router.post('/register', async (req, res) => {
+router.post('/signup', async (req, res) => {
     try {
         const { username, password, role } = req.body;
         const validateUser = userScehma.safeParse(req.body);
@@ -92,7 +86,7 @@ const signinSchema = zod.object({
     password: zod.string()
 })
 
-router.post('/login', async (req, res) => {
+router.post('/signin', async (req, res) => {
     try {
         const { username, password } = req.body;
         const validateUser = signinSchema.safeParse(req.body);
