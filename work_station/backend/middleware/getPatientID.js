@@ -2,7 +2,8 @@ const prisma = require("../db/client");
 // Not tested
 
 async function getPatientID(req,res,next) {
-    if(!req.body.patientId){
+    console.log("Heree: ",req.query.patientId);
+    if(!req.query.patientId){
         return res.status(400).json({
             msg : "Invalid request"
         })
@@ -10,7 +11,7 @@ async function getPatientID(req,res,next) {
     try{
         const patient = await prisma.patient.findUnique({
             where:{
-                patientId : req.body.patientId
+                patientId : req.query.patientId
             }
         })
         if(!patient){
@@ -23,7 +24,7 @@ async function getPatientID(req,res,next) {
 
     }
     catch(err){
-        // console.log("Error occurred: ", err)
+        console.log("Error occurred: ", err)
         return res.status(500).json({
             msg: "Please try again later"
         })

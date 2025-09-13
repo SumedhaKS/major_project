@@ -20,12 +20,18 @@ async function generateXrayID(req, res, next) {
             })
         }
         const xrayId = `XR${String(tempXray.id).padStart(6,'0')}`; 
+        await prisma.xRay.update({                                  // updating xrayId here itself
+            where:{id: tempXray.id},
+            data:{
+                xrayId,
+            }
+        }) 
         req.xID = xrayId;                              // added for multer
         next()
 
     }
     catch(err){
-        // console.log("Error occurred: ", err)            
+        console.log("Error occurred: ", err)            
         return res.status(500).json({
             msg: "Please try again later"
         })
