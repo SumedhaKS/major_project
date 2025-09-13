@@ -15,14 +15,28 @@ async function main() {
             role: "staff"
         },
     })
-    console.log(alice)
+    const dummmyPatient1 = await prisma.patient.upsert({
+        where: {
+            id: 1
+        },
+        update: {},
+        create: {
+            patientId: "PT000001",
+            name:"dummyPatient1",
+            age:100,
+            gender:"Male",
+            phone: "1111111111"
+        },
+    })
+    console.log(alice);
+    console.log(dummmyPatient1);
 }
 
 main()
-    .then(async ()=>{
+    .then(async () => {
         await prisma.$disconnect()
-    }) 
-    .catch(async (e)=>{
+    })
+    .catch(async (e) => {
         console.error(e)
         await prisma.$disconnect()
         process.exit(1)
