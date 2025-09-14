@@ -21,13 +21,15 @@ Steps to setup =>
         $ uv run fastapi dev
 
 
-##File structure
+## 📂 Project Structure
 
-└─ src/
-├─ .venv/ # Local virtual environment (ignored in Git)
-├─ app/ # Application source code
-│ ├─ init.py
-│ └─ main.py # FastAPI entrypoint
-├─ pyproject.toml # Project dependencies
-├─ uv.lock # Locked dependency versions
-└─ README.md # Project setup instructions
+```text
+
+ └─ src/
+     ├─ .venv/          # Local virtual environment (ignored in Git)
+     ├─ app/            # Application source code
+     │   ├─ __init__.py
+     │   └─ main.py     # FastAPI entrypoint
+     ├─ pyproject.toml  # Project dependencies
+     ├─ uv.lock         # Locked dependency versions
+     └─ README.md       # Project setup instructions
