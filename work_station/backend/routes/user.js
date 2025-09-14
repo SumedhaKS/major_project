@@ -1,7 +1,7 @@
 const express = require('express')
 require('dotenv').config();
 const bcrypt = require('bcrypt');
-const zod = require("zod")
+const {zod} = require("../config")
 const router = express.Router();
 
 const saltrounds = 10;
