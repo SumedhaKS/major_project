@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const {jwt} = require('../config');
 
 //all JWT functins are working->tested
 const signToken = (payload,options={})=>{
