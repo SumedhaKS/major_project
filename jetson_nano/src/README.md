@@ -1,29 +1,44 @@
-Steps to setup =>
+# Project Setup Instructions
 
-1. Installing uv => 
-        On Linux - $ curl -LsSf https://astral.sh/uv/install.sh | sh
+Follow these steps to set up the project environment and run the FastAPI app.
+
+## Steps to Setup
+
+### 1. Installing `uv`
+
+- **On Linux:**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
         
-        On Windows - $ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-        
-        However, pip can also be used - $pip install uv
+- **On Windows:**
+```bash
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 
-2. Create virtual env => 
-        $ uv venv
+However, pip can also be used -
+```bash 
+$ pip install uv
 
-3. Install dependencies from lockfile =>
-        $ uv sync
+2. ** Create virtual env ** => 
+```bash 
+$ uv venv
 
-4. Activate environment => 
-       Linux/macOS
+3. ** Install dependencies from lockfile ** =>
+```bash 
+$ uv sync
 
+4. ** Activate environment ** => 
+      ** Linux/macOS **
+```bash 
 source .venv/bin/activate 
 
-     Windows
-
+     ** Windows **
+```bash 
 .\.venv\Scripts\activate
 
  
-5. Run the App
+5. ** Run the App **  => 
+```bash 
 uv run fastapi dev
 
 
