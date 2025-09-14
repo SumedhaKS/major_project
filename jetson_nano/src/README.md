@@ -1,7 +1,7 @@
 Steps to setup =>
 
 1. Installing uv => 
-        On Linux - $ sudo snap install astral-uv --classic
+        On Linux - $ curl -LsSf https://astral.sh/uv/install.sh | sh
         
         On Windows - $ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
         
@@ -13,12 +13,18 @@ Steps to setup =>
 3. Install dependencies from lockfile =>
         $ uv sync
 
-4. Activate environment
-        $ source .venv/bin/activate   # Linux/macOS
-        $ .\.venv\Scripts\activate    # Windows
+4. Activate environment => 
+       Linux/macOS
+
+source .venv/bin/activate 
+
+     Windows
+
+.\.venv\Scripts\activate
+
  
-5. Run the app
-        $ uv run fastapi dev
+5. Run the App
+uv run fastapi dev
 
 
 ## 📂 Project Structure
