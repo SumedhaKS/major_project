@@ -45,6 +45,7 @@ model XRay {
   xrayId       String   @unique                        // Human-readable ID for X-ray (e.g. XR000123)
   filePath     String                                 // Path to original X-ray image
   analyzedPath String?                                // Path to analyzed X-ray image
+  fileHash     String?  @unique
   patient      Patient  @relation(fields: [patientId], references: [id])
   patientId    Int
   createdAt    DateTime @default(now())
