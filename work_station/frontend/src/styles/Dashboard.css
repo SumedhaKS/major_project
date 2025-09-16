@@ -1,0 +1,101 @@
+/* General dashboard styling */
+.dashboard {
+  font-family: Arial, sans-serif;
+  background-color: #e0fbfc;
+  color: #253237;
+  min-height: 100vh;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #253237;
+  color: #e0fbfc;
+  padding: 15px 30px;
+}
+
+.dashboard-header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.dashboard-header .nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #e0fbfc;
+  font-weight: 500;
+}
+
+.dashboard-header .nav a:hover {
+  color: #9db4c0;
+}
+
+/* Hero section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 60px;
+  background-color: #c2dfe3;
+}
+
+.hero-text {
+  max-width: 50%;
+}
+
+.hero-text h1 {
+  font-size: 2rem;
+  color: #253237;
+}
+
+.hero-text p {
+  margin-top: 15px;
+  color: #5c6b73;
+}
+
+.hero-image img {
+  max-width: 250px;
+}
+
+/* Patient Search */
+.patient-search {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.patient-search h2 {
+  margin-bottom: 15px;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.search-box input {
+  padding: 10px;
+  border: 1px solid #9db4c0;
+  border-radius: 5px;
+  width: 250px;
+}
+
+/* Quick Actions */
+.quick-actions {
+  padding: 20px;
+  background-color: #9db4c0;
+  text-align: center;
+}
+
+.quick-actions h2 {
+  margin-bottom: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}

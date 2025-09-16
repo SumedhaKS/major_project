@@ -1,0 +1,105 @@
+/* Container to center the form */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f4f6; /* light gray */
+}
+
+/* Form card */
+.signup-form {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 380px;
+}
+
+/* Title */
+.signup-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2563eb;
+}
+
+/* Input + Select fields */
+.signup-form input,
+.signup-form select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Label */
+.signup-form label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Redirect text */
+.signup-form p {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.signup-form p a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.signup-form p a:hover {
+  text-decoration: underline;
+}
+
+/* Center the form in the page */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* full height */
+  background-color: #f9f9f9;
+}
+
+/* Form box */
+.auth-form {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 90%;          /* default for small screens */
+  max-width: 400px;    /* prevent it from stretching too wide */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Input fields */
+.auth-form input,
+.auth-form select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .auth-form {
+    padding: 15px;
+    width: 95%;
+  }
+}
