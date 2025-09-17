@@ -53,7 +53,7 @@ router.post('/register', authMiddleware, async (req, res) => {
         });
 
         if (patientExists.length > 0) {
-            return res.status(200).json({
+            return res.status(201).json({
                 message: `Patient with phone ${phone} already exists`
             });
         }
@@ -62,7 +62,7 @@ router.post('/register', authMiddleware, async (req, res) => {
             data: {
                 patientId: "TEMP",
                 name,
-                age,
+                age: Number(age),
                 gender,
                 phone,
                 address
