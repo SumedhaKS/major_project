@@ -13,6 +13,20 @@
   margin-bottom: 10px;
 }
 
+.patient-id label {
+  font-size: 18px;   /* bigger label */
+  font-weight: bold; /* optional */
+  margin-right: 10px;
+}
+
+.patient-id input {
+  font-size: 16px;   /* bigger text inside */
+  padding: 8px 12px; /* bigger box */
+  width: 250px;      /* wider input */
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
 .subtitle {
   color: #5c6b73;
   margin-bottom: 20px;
@@ -23,7 +37,7 @@
 .drop-zone {
   border: 2px dashed #5c6b73;
   border-radius: 10px;
-  padding: 40px;
+  padding: 20px;
   background: #c2dfe3;
   cursor: pointer;
   margin-bottom: 20px;
@@ -41,20 +55,32 @@
 
 /* Preview Section */
 .preview-section {
-  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px; /* space between images */
+  margin-top: 20px;
 }
 
-.preview-grid {
+.preview-item {
+  text-align: center;
+}
+
+.preview-item h3 {
+  margin-bottom: 10px;
+}
+
+/* .preview-grid {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
-}
+} */
 
 .preview-img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border: 2px solid #5c6b73;
+  width: 380px;   /* increase image size */
+  height: auto;
   border-radius: 8px;
+  border: 2px solid #ccc;
+  object-fit: contain;
 }
