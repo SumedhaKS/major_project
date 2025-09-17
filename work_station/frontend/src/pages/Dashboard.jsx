@@ -1,8 +1,20 @@
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import "../styles/Dashboard.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Dashboard() {
+  const [phone, setPhone] = useState("");
+
+  useEffect(()=>{
+    async ()=>{
+      const response = await axios.get("http://localhost:3000/api/v1/patient/search");
+      // logic pending
+    }
+  }, [phone])
+   // logic pending
+
   return (
     <div className="dashboard">
       {/* Header */}
@@ -30,7 +42,7 @@ export default function Dashboard() {
       <section className="patient-search">
         <h2>Find Patient</h2>
         <div className="search-box">
-          <input type="text" placeholder="Enter Phone" />
+          <input type="text" placeholder="Enter Phone" onChange={(e)=> setPhone(e.target.value)} />
           <Button>Search</Button>
         </div>
         <p>
