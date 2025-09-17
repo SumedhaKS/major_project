@@ -2,25 +2,62 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import "../styles/RegisterPatient.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 export default function RegisterPatient() {
   const [formData, setFormData] = useState({
     name: "",
     age: "",
-    gender: "Male",
+    gender: "Male",   //default 
     phone: "",
     address: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Patient Registered:", formData);
-    // Later your backend team will add API call here
-    alert("Patient registered successfully!");
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post("http://localhost:3000/api/v1/patient/register",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      if (response.status === 200) {
+        const pID = response.data.patient.patientId
+        console.log(pID);
+        alert(`PID: ${pID} registered successfully! `);
+        // patientID.createContext(response.data.patient)
+        navigate("/get-images");
+      }
+      if(response.status === 201){
+        alert("Patient with same phone number exists")
+      }
+
+
+    }
+    catch (error) {
+        if(error.response){
+          if(error.response.status === 400){
+            alert("Insufficient data");
+          }
+        }
+        else{
+          alert("Server is unreachable")
+        }
+    }
+
   };
 
   return (
