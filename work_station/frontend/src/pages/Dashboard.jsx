@@ -10,8 +10,7 @@ export default function Dashboard() {
         <div className="logo">🦷 Dental AI</div>
         <nav className="nav">
           <Link to="/dashboard">Dashboard</Link>
-          <Link to="/patient-details">Patients</Link>
-          <Link to="/get-images">Upload Images</Link>
+          <Link to="/patient-details">Register Patient</Link>
           <Link to="/reports">Reports</Link>
         </nav>
         <div className="logout">
@@ -22,17 +21,8 @@ export default function Dashboard() {
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-text">
-          <h1>AI-Powered Dental Diagnostics</h1>
-          <p>
-            Upload, analyze, and manage patient records instantly. 
-            Optimized for clinics and hospitals in remote areas.
-          </p>
-        </div>
-        <div className="hero-image">
-          <img 
-            src="https://cdn-icons-png.flaticon.com/512/2966/2966484.png" 
-            alt="Dental illustration"
-          />
+          <h1>Welcome to Dental AI</h1>
+          <p>Smart diagnostics and patient management at your fingertips.</p>
         </div>
       </section>
 
@@ -43,16 +33,40 @@ export default function Dashboard() {
           <input type="text" placeholder="Enter Patient ID or Phone" />
           <Button>Search</Button>
         </div>
-        <p>Not found? <Link to="/patient-details">Register New Patient</Link></p>
+        <p>
+          Not found?{" "}
+          <Link to="/patient-details">Register New Patient</Link>
+        </p>
       </section>
 
-      {/* Quick Actions */}
-      <section className="quick-actions">
-        <h2>Quick Actions</h2>
-        <div className="action-buttons">
-          <Link to="/patient-details"><Button>Register Patient</Button></Link>
-          <Link to="/get-images"><Button>Upload Images</Button></Link>
-          <Link to="/reports"><Button>View Reports</Button></Link>
+      {/* Services Section */}
+      <section className="services">
+        <h2>Our Services</h2>
+        <div className="service-cards">
+          <div className="card">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png"
+              alt="AI Diagnosis"
+            />
+            <h3>AI Diagnosis</h3>
+            <p>Analyze dental images instantly with our AI-powered tools.</p>
+          </div>
+          <div className="card">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png"
+              alt="Patient Management"
+            />
+            <h3>Patient Management</h3>
+            <p>Register and maintain detailed patient records seamlessly.</p>
+          </div>
+          <div className="card">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+              alt="Reports"
+            />
+            <h3>Reports</h3>
+            <p>Access detailed diagnostic reports anytime, anywhere.</p>
+          </div>
         </div>
       </section>
     </div>

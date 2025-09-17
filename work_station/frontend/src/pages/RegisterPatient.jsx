@@ -5,7 +5,6 @@ import "../styles/RegisterPatient.css";
 
 export default function RegisterPatient() {
   const [formData, setFormData] = useState({
-    patientId: "",
     name: "",
     age: "",
     gender: "Male",
@@ -28,17 +27,6 @@ export default function RegisterPatient() {
     <div className="register-container">
       <form className="register-form" onSubmit={handleSubmit}>
         <h2>Register Patient</h2>
-
-        <div className="form-group">
-          <label>Patient ID</label>
-          <input
-            type="text"
-            name="patientId"
-            value={formData.patientId}
-            onChange={handleChange}
-            required
-          />
-        </div>
 
         <div className="form-group">
           <label>Name</label>
