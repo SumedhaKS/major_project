@@ -64,13 +64,16 @@ const signinSchema = zod.object({
 //staff login
 router.post('/signin', async (req, res) => {
     try {
-        const { username, password, role } = req.body;
+        console.log(req.body);
+
         const validateUser = signinSchema.safeParse(req.body);
         if (!validateUser.success) {
             return res.status(400).json({ "message": "Invalid inputs" });
         }
 
-        const creds = await prisma.user.findUnique({
+        const { username, password, role } = req.body;
+
+        const creds = await prisma.user.findFirst({
             where: {
                 username,
                 role
@@ -86,7 +89,10 @@ router.post('/signin', async (req, res) => {
         }
 
         const token = signToken({ username: creds.username });
-        return res.status(200).json({ message: "login successful", "data": { token } });
+        return res.status(200).json({
+            message: "login successful",
+            token: token
+        });
 
     }
     catch (err) {
