@@ -23,7 +23,8 @@ router.get('/search',authMiddleware, async (req,res)=>{
             },
             select: {
                 name:true,
-                phone: true
+                //phone: true,
+                patientId:true
             },
             take: 10 // Limit the number of suggestions
         });
@@ -37,13 +38,65 @@ router.get('/search',authMiddleware, async (req,res)=>{
 
 
 
-//register a new patient 
-router.post('/register',authMiddleware, (req,res)=>{
-    console.log("here");
-    res.json({
-        msg: req.params.id
-    })
-})
+router.post('/register', authMiddleware, async (req, res) => {
+    const { name, age, gender, phone, address } = req.body;
+
+    if (!name || !age || !gender || !phone || !address) {
+        return res.status(400).json({
+            message: "Insufficient data, please fill in all the fields and try again"
+        })
+    }
+
+    try {
+        const patientExists = await Client.patient.findMany({
+            where: { phone ,name},
+            select: { id: true, name: true, phone: true }
+        });
+
+        if (patientExists.length > 0) {
+            return res.status(200).json({
+                message: `Patient with phone ${phone} already exists`
+            });
+        }
+
+        const tempPatient = await Client.patient.create({
+            data: {
+                patientId: "TEMP",
+                name,
+                age,
+                gender,
+                phone,
+                address
+            }
+        });
+
+        if (!tempPatient) {
+            return res.status(500).json({
+                message: "Failed to register the patient"
+            });
+        }
+
+        const patientID = `PT${String(tempPatient.id).padStart(6, '0')}`;
+        console.log(`Generated patient ID: ${patientID}`);
+
+        const updatePID = await Client.patient.update({
+            where: { id: tempPatient.id },
+            data: { patientId: patientID }
+        });
+
+        return res.status(200).json({
+            message: "Patient registered successfully",
+            patient: updatePID
+        });
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+});
+
 
 //pending route
 router.put('/update/:id',authMiddleware,(req,res)=>{
