@@ -5,9 +5,8 @@ import "../styles/Signup.css";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
     role: "Doctor", // default role
+    email: "",
     password: "",
     confirmPassword: "",
   });
@@ -33,32 +32,8 @@ export default function Signup() {
       <form onSubmit={handleSubmit} className="signup-form">
         <h2>Sign Up</h2>
 
-        {/* Name */}
-        <div>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {/* Email */}
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
         {/* Role */}
-        <div>
+        <div className="form-group">
           <label>Role</label>
           <select
             name="role"
@@ -70,8 +45,20 @@ export default function Signup() {
           </select>
         </div>
 
+        {/* Email */}
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         {/* Password */}
-        <div>
+        <div className="form-group">
           <label>Password</label>
           <input
             type="password"
@@ -83,7 +70,7 @@ export default function Signup() {
         </div>
 
         {/* Confirm Password */}
-        <div>
+        <div className="form-group">
           <label>Confirm Password</label>
           <input
             type="password"

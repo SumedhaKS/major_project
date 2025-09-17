@@ -4,7 +4,11 @@ import Button from "../components/Button";
 import "../styles/Signin.css";
 
 export default function Signin() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    role: "Doctor", // default role
+  });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,6 +18,7 @@ export default function Signin() {
     e.preventDefault();
     console.log("User entered:", formData);
     // later your backend team will add API here
+    alert(`Signed in as ${formData.role}`);
   };
 
   return (
@@ -22,7 +27,7 @@ export default function Signin() {
         <h2>Sign In</h2>
 
         {/* Email */}
-        <div>
+        <div className="form-group">
           <label>Email</label>
           <input
             type="email"
@@ -34,7 +39,7 @@ export default function Signin() {
         </div>
 
         {/* Password */}
-        <div>
+        <div className="form-group">
           <label>Password</label>
           <input
             type="password"
@@ -43,6 +48,19 @@ export default function Signin() {
             onChange={handleChange}
             required
           />
+        </div>
+
+        {/* Role Selection */}
+        <div className="form-group">
+          <label>Sign in as</label>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+          >
+            <option value="Doctor">Doctor</option>
+            <option value="Staff">Staff</option>
+          </select>
         </div>
 
         {/* Submit */}
