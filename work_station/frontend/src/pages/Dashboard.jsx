@@ -30,7 +30,7 @@ export default function Dashboard() {
       <section className="patient-search">
         <h2>Find Patient</h2>
         <div className="search-box">
-          <input type="text" placeholder="Enter Patient ID or Phone" />
+          <input type="text" placeholder="Enter Phone" />
           <Button>Search</Button>
         </div>
         <p>
