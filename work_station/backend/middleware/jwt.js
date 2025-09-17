@@ -3,7 +3,7 @@ const {jwt} = require('../config');
 //all JWT functins are working->tested
 const signToken = (payload,options={})=>{
     return jwt.sign(payload,process.env.JWT_SECRET,{
-    expiresIn: process.env.JWT_EXPIRES_IN || "15m",
+    expiresIn: process.env.JWT_EXPIRES_IN || "30m",
     ...options,
   });
 }
