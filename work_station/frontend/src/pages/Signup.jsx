@@ -1,30 +1,61 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import Button from "../components/Button";
 import "../styles/Signup.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
-    role: "Doctor", // default role
-    email: "",
+    role: "staff", // default role
+    username: "",
     password: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
 
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
+    try {
+      const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+        username: formData.username,
+        password: formData.password,
+        role: formData.role
+      })
 
-    console.log("User registered with:", formData);
-    // Later: backend team will handle API call
+      if (response.status === 200) {
+        alert("Registered successfully")
+        navigate("/")
+      }
+    }
+    catch (error) {
+      if (error.response) {
+        if (error.response.status === 409) {
+          alert("Username already exists");
+        }
+        else if(error.response.status === 400){
+          alert("Invalid input")
+        }
+        else{
+          alert("Something went wrong. Please try again")
+        }
+      }
+      else{
+        alert("Server not reachable")
+      }
+
+    }
+
   };
 
   return (
@@ -39,9 +70,10 @@ export default function Signup() {
             name="role"
             value={formData.role}
             onChange={handleChange}
+            required
           >
-            <option value="Doctor">Doctor</option>
-            <option value="Staff">Staff</option>
+            <option value="doc">Doctor</option>
+            <option value="staff">Staff</option>
           </select>
         </div>
 
@@ -50,8 +82,9 @@ export default function Signup() {
           <label>Email</label>
           <input
             type="email"
-            name="email"
-            value={formData.email}
+            name="username"
+            placeholder="example@example.com"
+            value={formData.username}
             onChange={handleChange}
             required
           />
@@ -63,6 +96,7 @@ export default function Signup() {
           <input
             type="password"
             name="password"
+            minLength={4}
             value={formData.password}
             onChange={handleChange}
             required
