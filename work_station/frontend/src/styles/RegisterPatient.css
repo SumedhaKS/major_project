@@ -1,0 +1,59 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.register-form {
+  width: 400px;
+  padding: 20px;
+  background-color: #e0fbfc;
+  border: 1px solid #c2dfe3;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.register-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #253237;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #5c6b73;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #9db4c0;
+  border-radius: 5px;
+}
+
+textarea {
+  resize: none;
+  height: 70px;
+}
+
+.back-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.back-link a {
+  color: #253237;
+  text-decoration: none;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}

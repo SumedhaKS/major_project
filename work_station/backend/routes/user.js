@@ -1,7 +1,7 @@
 const express = require('express')
 require('dotenv').config();
 const bcrypt = require('bcrypt');
-const {zod} = require("../config")
+const { zod } = require("../config")
 const router = express.Router();
 
 const saltrounds = 10;
@@ -9,36 +9,34 @@ const { signToken } = require('../middleware/jwt')
 const prisma = require("../db/client")   // instantiate client once in /db/client.js and re-use it 
 
 const userSchema = zod.object({             // can be more strict
-    username: zod.string(),                 
-    password: zod.string(),
+    username: zod.email(),
+    password: zod.string().min(4),
     role: zod.string()                      // role to be made optional ?
 })
 
 router.post('/signup', async (req, res) => {
     try {
-        const { username, password, role } = req.body;
         const validateUser = userSchema.safeParse(req.body);
         // the role has to be either doc or staff -> else the DB will throw an error  -> not really I guess as @default(staff) is mentioned in schema
-
         if (!validateUser.success) {
             return res.status(400).json({ "message": "invalid username or password or role" });
         }
-        else {
-            const salt = await bcrypt.genSalt(saltrounds);
 
-            const hashed_pwd = await bcrypt.hash(password, salt);
+        const { username, password, role } = validateUser.data;
 
-            await prisma.user.create({
-                data: {
-                    username: username,
-                    password: hashed_pwd,
-                    role
-                },
-            });
-            res.status(200).json({
-                "message": "new user created",
-            });
-        }
+        const hashed_pwd = await bcrypt.hash(password, saltrounds);
+
+        await prisma.user.create({
+            data: {
+                username,
+                password: hashed_pwd,
+                role
+            },
+        });
+        res.status(200).json({
+            "message": "new user created",
+        });
+
     }
     catch (error) {
         // error handling for already username taken (username is a unique attribute in DB)
@@ -58,21 +56,25 @@ router.post('/signup', async (req, res) => {
 });
 
 const signinSchema = zod.object({
-    username: zod.string(),
-    password: zod.string()
+    username: zod.email(),
+    password: zod.string(),
+    role: zod.string()
 })
 
 //staff login
 router.post('/signin', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, password, role } = req.body;
         const validateUser = signinSchema.safeParse(req.body);
         if (!validateUser.success) {
             return res.status(400).json({ "message": "Invalid inputs" });
         }
 
         const creds = await prisma.user.findUnique({
-            where: { username: username }
+            where: {
+                username,
+                role
+            }
         });
         if (!creds) {
             return res.status(404).json({ message: "user not found" });

@@ -1,0 +1,60 @@
+.upload-container {
+  width: 75%;
+  margin: 40px auto;
+  padding: 30px;
+  background: #e0fbfc;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.upload-container h2 {
+  color: #253237;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #5c6b73;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* Drag & Drop Zone */
+.drop-zone {
+  border: 2px dashed #5c6b73;
+  border-radius: 10px;
+  padding: 40px;
+  background: #c2dfe3;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background 0.3s ease;
+}
+
+.drop-zone:hover {
+  background: #9db4c0;
+}
+
+.drop-zone input {
+  display: block;
+  margin: 10px auto;
+}
+
+/* Preview Section */
+.preview-section {
+  margin: 20px 0;
+}
+
+.preview-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.preview-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 2px solid #5c6b73;
+  border-radius: 8px;
+}

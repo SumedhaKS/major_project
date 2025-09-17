@@ -6,7 +6,6 @@ const Client = require('../db/client');    // instantiate client once in /db/cli
 const  authMiddleware  = require("../middleware/auth");
 
 //Fetch patient by id -> POST (for the drop down bar) [to check if patient exists]
-
 router.get('/search',authMiddleware, async (req,res)=>{
     try{
         const query = req.query.phno;
@@ -35,7 +34,7 @@ router.get('/search',authMiddleware, async (req,res)=>{
         res.json({"Error":err}).status(500);
     }
     
-
+})
 
 
 router.post('/register', authMiddleware, async (req, res) => {

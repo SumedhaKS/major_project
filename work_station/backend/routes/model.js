@@ -38,15 +38,27 @@ router.post("/predict", authMiddleware, getPatientID, generateXrayID, uploadWith
     console.log(req.file);
     console.log(req.xID);
     try {
-        await prisma.xRay.update({
-            where: { xrayId: req.xID },
-            data: {
-                filePath: `/images/uploads/${req.file.filename}`
+        //  if (req.existingXRay) and (req.analyzedPath) - no filepath update return the image at analyzed path
+        if (req.existingXRay ) { 
+            if(req.analyzedPath != null){
+                console.log("inside here in model.js")
+                return res.sendFile(req.analyzedPath);
             }
-        })
-
+            //  xray exists but not ananlyzed => then send to model            
+        }
+        else{
+            await prisma.xRay.update({
+                where: { xrayId: req.xID },
+                data: {
+                    filePath: req.filePath
+                }
+            })
+            
+        }
+       
+    
         const form = new FormData()
-        form.append("file", fs.createReadStream(req.file.path))
+        form.append("file", fs.createReadStream(req.filePath))
 
         const modelResponse = await axios.post("http://localhost:8000/analyze", form, {
             headers: form.getHeaders(),                             // Returns a shallow copy of the current outgoing headers
