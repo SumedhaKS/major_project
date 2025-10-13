@@ -5,14 +5,16 @@ from ultralytics import YOLO
 import numpy as np
 from pathlib import Path
 import io
+import os
 
 app = FastAPI()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-modelPath = BASE_DIR / "best.pt"
+MODEL_NAME = os.getenv("MODEL_NAME", "best.pt")
+modelPath = f"/app/models/{MODEL_NAME}"
 
+print(f"Loading the model: {modelPath}")
 #load the model once
-model = YOLO(str(modelPath))
+model = YOLO(modelPath)
 
 
 @app.post("/analyze")                                       

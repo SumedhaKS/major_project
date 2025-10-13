@@ -1,0 +1,20 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+.venv/
+
+# Git files
+.git/
+.gitignore
+
+# System files  
+*.DS_Store
+
+# Docs and misc
+README.md
+
+# Local data or weights (if not needed inside container)
+# *.pt
