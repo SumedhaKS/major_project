@@ -55,9 +55,9 @@ router.post("/predict", authMiddleware, getPatientID, generateXrayID, uploadWith
             })
 
         }
-        
-        console.log(req.body.modelType)
-        const requestedModelType = req.body.modelType;      // "float64" || "float16" || "int8"
+
+        console.log(req.query.modelType)
+        const requestedModelType = req.query.modelType;      // "float64" || "float16" || "int8"
 
         const form = new FormData()
         form.append("file", fs.createReadStream(req.filePath))
