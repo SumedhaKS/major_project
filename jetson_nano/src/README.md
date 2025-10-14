@@ -30,6 +30,8 @@
      ├─ app/            # Application source code
      │   ├─ __init__.py
      │   └─ main.py     # FastAPI entrypoint
+     |--models/
+     |   |-- various models
      ├─ pyproject.toml  # Project dependencies
      ├─ uv.lock         # Locked dependency versions
      └─ README.md       # Project setup instructions
