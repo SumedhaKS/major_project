@@ -7,13 +7,13 @@ export default function UploadImages() {
   const [image, setImage] = useState(null);
   const [analyzedImage, setAnalyzedImage] = useState(null);
   const [patientID, setPatientID] = useState("");
+  const [modelType, setModelType] = useState("float64");
 
   /*
     patientID to be added to req.query.patientID
     token to req.header.authorization
     image 
   */
-
 
 
 
@@ -47,9 +47,13 @@ export default function UploadImages() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.post(`http://localhost:3000/api/v1/model/predict?patientId=${patientID}`,
+      const response = await axios.post(`http://localhost:3000/api/v1/model/predict`,
         formData,
         {
+          params: {
+            patientId: patientID,
+            modelType
+          },
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`
@@ -76,6 +80,26 @@ export default function UploadImages() {
         <label >PatientID: </label>
         <input type="text" placeholder="PT000001" value={patientID} onChange={(e) => setPatientID(e.target.value)} />
       </div>
+
+      <div className="model-type">
+        <label> Model type: </label>
+
+        <label>
+          <input type="radio" name="float64" value="float64" checked={modelType === "float64"} onChange={(e) => setModelType(e.target.value)} />
+          float64
+        </label>
+
+        <label>
+          <input type="radio" name="float16" value="float16" checked={modelType === "float16"} onChange={(e) => setModelType(e.target.value)} />
+          float16
+        </label>
+
+        <label>
+          <input type="radio" name="int8" value="int8" checked={modelType === "int8"} onChange={(e) => setModelType(e.target.value)} />
+          int8
+        </label>
+      </div>
+
       <h2>Upload Patient Image</h2>
       <p className="subtitle">Drag & drop dental X-ray</p>
 

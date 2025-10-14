@@ -1,6 +1,6 @@
 .upload-container {
   width: 75%;
-  margin: 40px auto;
+  margin: 60px auto;
   padding: 30px;
   background: #e0fbfc;
   border-radius: 12px;
@@ -11,16 +11,17 @@
 .upload-container h2 {
   color: #253237;
   margin-bottom: 10px;
+  margin-top: 90px;
 }
 
 .patient-id label {
-  font-size: 18px;   /* bigger label */
+  font-size: 20px;   /* bigger label */
   font-weight: bold; /* optional */
   margin-right: 10px;
 }
 
 .patient-id input {
-  font-size: 16px;   /* bigger text inside */
+  font-size: 18px;   /* bigger text inside */
   padding: 8px 12px; /* bigger box */
   width: 250px;      /* wider input */
   border-radius: 6px;
@@ -83,4 +84,39 @@
   border-radius: 8px;
   border: 2px solid #ccc;
   object-fit: contain;
+}
+
+.model-type {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 25px; /* space between each option */
+  font-size: 1.2rem;
+  flex-wrap: wrap; /* so it doesn’t overflow on smaller screens */
+}
+
+.model-type > label:first-child {
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.model-type label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 540;
+}
+
+.model-type input[type="radio"] {
+  width: 22px;
+  height: 22px;
+  accent-color: #007bff; /* nice blue color */
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.model-type label:hover {
+  color: #0056b3;
 }
