@@ -22,8 +22,5 @@ COPY . .
 # Expose FastAPI port
 EXPOSE 8000
 
-# Environment variable for model name
-ENV MODEL_NAME=best.pt
-
 # Command to run FastAPI
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
