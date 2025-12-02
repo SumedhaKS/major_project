@@ -2,12 +2,13 @@ import { useState } from "react";
 import Button from "../components/Button";
 import "../styles/UploadImages.css";
 import axios from "axios";
-import Loader from "../components/Loader";
+
 
 export default function UploadImages() {
+  const id = useParams();
   const [image, setImage] = useState(null);
   const [analyzedImage, setAnalyzedImage] = useState(null);
-  const [patientID, setPatientID] = useState("");
+  const [patientID, setPatientID] = useState(id.id);
   const [modelType, setModelType] = useState("float64");
   const [processing, setProcessing] = useState(false);
   /*
@@ -16,6 +17,9 @@ export default function UploadImages() {
     image 
   */
 
+  // if(id){
+  //   setPatientID(id);
+  // }
 
 
   const handleFiles = (files) => {

@@ -5,6 +5,8 @@ import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
 import RegisterPatient from "./pages/RegisterPatient";
 import UploadImages from "./pages/UploadImages"; // ✅ import added
+import PatientView from "./pages/PatientView";
+
 
 function App() {
   return (
@@ -15,7 +17,9 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/patient-details" element={<RegisterPatient />} />
-        <Route path="/get-images" element={<UploadImages />} /> {/* ✅ new route */}
+        <Route path="/get-images/:id?" element={<UploadImages />} /> {/* ✅ new route */}
+        <Route path="/patient/:id/:name" element={<PatientView />} />
+
       </Routes>
     </BrowserRouter>
   );

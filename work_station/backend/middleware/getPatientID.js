@@ -20,6 +20,7 @@ async function getPatientID(req,res,next) {
             })
         }
         req.pID = patient.id;
+        console.log("calling next ")
         next() 
 
     }

@@ -58,36 +58,47 @@ router.post("/predict", authMiddleware, getPatientID, generateXrayID, uploadWith
 
         console.log(req.query.modelType)
         const requestedModelType = req.query.modelType;      // "float64" || "float16" || "int8"
-
+        for(let i =0 ; i<20 ; i++){
         const form = new FormData()
         form.append("file", fs.createReadStream(req.filePath))
         form.append("modelType", requestedModelType)
 
-        const modelResponse = await axios.post("http://0.0.0.0:8000/analyze", form, {
+        let startTime = new Date().getTime();
+        
+        const modelResponse = await axios.post("http://192.168.1.113:8000/analyze", form, {
             headers: form.getHeaders(),                             // Returns a shallow copy of the current outgoing headers
             responseType: "arraybuffer"
         });
-
         if (!modelResponse) {
-            return res.status(500).json({
-                msg: "Failed to analyze"
-            })
+            console.log(`no response at i :${i}`)
         }
+        console.log(`done iteration i:${i}`)
+        let endTime = new Date().getTime();
 
-        const analyzedFilename = `${req.xID}-analyzed.png`;
-        const getAnalyzedDir = path.resolve("public/images/analyzed");
-        const analyzedPath = path.join(getAnalyzedDir, analyzedFilename);
+        console.log(`${endTime-startTime}\n`);
+    }
+        
 
-        await fs.promises.writeFile(analyzedPath, modelResponse.data);
+        // if (!modelResponse) {
+        //     return res.status(500).json({
+        //         msg: "Failed to analyze"
+        //     })
+        // }
 
-        await prisma.xRay.update({
-            where: { xrayId: req.xID },
-            data: {
-                analyzedPath: analyzedPath
-            }
-        })
+        // const analyzedFilename = `${req.xID}-analyzed.png`;
+        // const getAnalyzedDir = path.resolve("public/images/analyzed");
+        // const analyzedPath = path.join(getAnalyzedDir, analyzedFilename);
 
-        return res.sendFile(analyzedPath);
+        // await fs.promises.writeFile(analyzedPath, modelResponse.data);
+
+        // await prisma.xRay.update({
+        //     where: { xrayId: req.xID },
+        //     data: {
+        //         analyzedPath: analyzedPath
+        //     }
+        // })
+
+        // return res.sendFile(analyzedPath);
 
     } catch (err) {
         console.error("Error occurred: ", err);
