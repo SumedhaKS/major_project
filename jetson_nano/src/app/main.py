@@ -6,6 +6,8 @@ import numpy as np
 import io
 import os
 import tensorflow as tf
+import time
+
 
 app = FastAPI()
 
@@ -88,9 +90,14 @@ async def analyze(file: UploadFile = File(...), modelType: str = Form(...)):
         input_data = np.expand_dims(img_resized, 0).astype(np.float32) / 255.0
 
         # Run inference
+        start_time = time.time()        
         interpreter.set_tensor(input_details[0]['index'], input_data)
         interpreter.invoke()
         output = interpreter.get_tensor(output_details[0]['index'])[0]  # (84, 8400)
+        end_time = time.time()
+
+        inference_time = end_time - start_time
+        print(f"Inference time: {inference_time:.4f} seconds")
 
         # Decode
         output = output.T  # (8400, 84)
