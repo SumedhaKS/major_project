@@ -21,6 +21,7 @@ export default function UploadImages() {
   //   setPatientID(id);
   // }
 
+  console.log(id);
 
   const handleFiles = (files) => {
     // const newFiles = Array.from(files);

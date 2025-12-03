@@ -23,6 +23,7 @@ router.post('/signup', async (req, res) => {
         }
 
         const { username, password, role } = validateUser.data;
+        console.log(username, password, role )
 
         const hashed_pwd = await bcrypt.hash(password, saltrounds);
 
@@ -101,5 +102,20 @@ router.post('/signin', async (req, res) => {
     }
 });
 
+router.post("/verifyAdmin", (req,res)=>{
+    const password = req.body.password;
+
+    const valid = password === process.env.ADMIN_PASSWORD;
+
+    if(!valid){
+        return res.json({
+            valid
+        })
+    }
+
+    return res.json({
+        valid
+    })
+})
 
 module.exports = router;

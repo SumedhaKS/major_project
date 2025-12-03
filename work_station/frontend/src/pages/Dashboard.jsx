@@ -50,6 +50,12 @@ export default function Dashboard() {
     navigate(`/patient/${patientId}/${name}`);
   };
 
+  const handleLogout = ()=>{
+    localStorage.removeItem("token");
+    navigate("/");
+    
+  }
+
   return (
     <div className="dashboard">
       {/* Header */}
@@ -61,7 +67,7 @@ export default function Dashboard() {
           <Link to="/reports">Reports</Link>
         </nav>
         <div className="logout">
-          <Button>Logout</Button>
+          <Button onClick={handleLogout}>Logout</Button>
         </div>
       </header>
 

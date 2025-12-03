@@ -1,61 +1,70 @@
 import { useState } from "react";
-import { data, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import "../styles/Signup.css";
+import AdminAuthModal from "../components/AdminAuthModal";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import "../styles/Signup.css";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
-    role: "staff", // default role
+    role: "staff",
     username: "",
     password: "",
     confirmPassword: "",
   });
+
+  const [showModal, setShowModal] = useState(false);  // MUST be false initially
+  const [pendingSignupData, setPendingSignupData] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      alert("Passwords do not match");
       return;
     }
+
+    // Store the signup details temporarily
+    setPendingSignupData(formData);
+
+    // VERY IMPORTANT: Open modal only here
+    setShowModal(true);
+  };
+
+  const verifyAdminAndSignup = async (adminPassword) => {
     try {
-      const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
-        username: formData.username,
-        password: formData.password,
-        role: formData.role
-      })
+      // 1️⃣ Verify admin password
+      const adminCheck = await axios.post(
+        "http://localhost:3000/api/v1/user/verifyAdmin",
+        { password: adminPassword }
+      );
 
-      if (response.status === 200) {
-        alert("Registered successfully")
-        navigate("/")
+      if (!adminCheck.data.valid) {
+        alert("Invalid admin password");
+        return;
       }
+
+      // 🔥 Close modal as soon as admin is verified
+      setShowModal(false);
+
+      // 2️⃣ Now do actual signup
+      const res = await axios.post(
+        "http://localhost:3000/api/v1/user/signup",
+        pendingSignupData
+      );
+
+      if (res.status === 200) {
+        alert("User registered successfully");
+        navigate("/");
+      }
+    } catch (err) {
+      alert("Something went wrong");
     }
-    catch (error) {
-      if (error.response) {
-        if (error.response.status === 409) {
-          alert("Username already exists");
-        }
-        else if(error.response.status === 400){
-          alert("Invalid input")
-        }
-        else{
-          alert("Something went wrong. Please try again")
-        }
-      }
-      else{
-        alert("Server not reachable")
-      }
-
-    }
-
   };
 
   return (
@@ -63,34 +72,29 @@ export default function Signup() {
       <form onSubmit={handleSubmit} className="signup-form">
         <h2>Sign Up</h2>
 
-        {/* Role */}
         <div className="form-group">
           <label>Role</label>
           <select
             name="role"
             value={formData.role}
             onChange={handleChange}
-            required
           >
             <option value="doc">Doctor</option>
             <option value="staff">Staff</option>
           </select>
         </div>
 
-        {/* Email */}
         <div className="form-group">
           <label>Email</label>
           <input
             type="email"
             name="username"
-            placeholder="example@example.com"
             value={formData.username}
             onChange={handleChange}
             required
           />
         </div>
 
-        {/* Password */}
         <div className="form-group">
           <label>Password</label>
           <input
@@ -103,7 +107,6 @@ export default function Signup() {
           />
         </div>
 
-        {/* Confirm Password */}
         <div className="form-group">
           <label>Confirm Password</label>
           <input
@@ -115,14 +118,19 @@ export default function Signup() {
           />
         </div>
 
-        {/* Submit Button */}
         <Button type="submit">Sign Up</Button>
 
-        {/* Redirect to Sign In */}
         <p>
           Already have an account? <Link to="/">Sign In</Link>
         </p>
       </form>
+
+      {/* Modal shows ONLY when showModal === true */}
+      <AdminAuthModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={verifyAdminAndSignup}
+      />
     </div>
   );
 }

@@ -39,7 +39,7 @@ export default function RegisterPatient() {
         console.log(pID);
         alert(`PID: ${pID} registered successfully! `);
         // patientID.createContext(response.data.patient)
-        navigate("/get-images");
+        navigate(`/get-images/${pID}`);
       }
       if(response.status === 201){
         alert("Patient with same phone number exists")
