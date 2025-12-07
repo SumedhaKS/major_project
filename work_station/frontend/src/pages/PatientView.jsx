@@ -14,17 +14,20 @@ export default function PatientView() {
     navigate(`/get-images/${id}`)
   }
 
+
   useEffect(() => {
     const fetchXrays = async () => {
       try {
         setLoading(true);
         const token = localStorage.getItem("token");
+        console.log(id);
         const response = await axios.get(
-          `http://localhost:3000/api/v1/patient/${id}/xrays`,
+          `http://localhost:3000/api/v1/patient/${id}/Allxrays`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
+        console.log(response);
         setXRays(response.data.xRays || []);
       } catch (error) {
         console.error("Error fetching patient X-rays:", error);
@@ -46,6 +49,11 @@ export default function PatientView() {
       month: "short",
       day: "numeric",
     });
+  };
+
+  const handleCardClick = (xrayId) => {
+    // Use patient ID and name from route params (id is the full padded ID like PT000001)
+    navigate(`/XrayView/${id}/${encodeURIComponent(name)}/${xrayId}`);
   };
 
   const openImage = (base64) => {
@@ -103,12 +111,12 @@ export default function PatientView() {
         {!loading && xRays.length > 0 ? (
           <div className="xray-list">
             {xRays.map((x) => (
-              <details key={x.xrayId} className="xray-item">
+              <details key={x.xrayId} className="xray-item" onClick={() => handleCardClick(x.xrayId)}>
                 <summary>
                   <span className="xray-id">{x.xrayId}</span>
                   <span className="xray-date">{formatDate(x.createdAt)}</span>
                 </summary>
-                <ul className="xray-dropdown">
+                {/* <ul className="xray-dropdown">
                   <li onClick={() => openImage(x.file)}>
                     <span>Zray</span>
                     <img src={x.file} alt="Original X-ray" />
@@ -124,7 +132,7 @@ export default function PatientView() {
                       <em>Not available</em>
                     )}
                   </li>
-                </ul>
+                </ul> */}
               </details>
             ))}
           </div>

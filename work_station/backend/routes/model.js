@@ -58,25 +58,25 @@ router.post("/predict", authMiddleware, getPatientID, generateXrayID, uploadWith
 
         console.log(req.query.modelType)
         const requestedModelType = req.query.modelType;      // "float64" || "float16" || "int8"
-        for(let i =0 ; i<20 ; i++){
+        
         const form = new FormData()
         form.append("file", fs.createReadStream(req.filePath))
         form.append("modelType", requestedModelType)
 
-        let startTime = new Date().getTime();
+        //let startTime = new Date().getTime();
         
-        const modelResponse = await axios.post("http://192.168.1.113:8000/analyze", form, {
+        const modelResponse = await axios.post("http://192.168.10.2:8000/analyze", form, {
             headers: form.getHeaders(),                             // Returns a shallow copy of the current outgoing headers
             responseType: "arraybuffer"
         });
-        if (!modelResponse) {
-            console.log(`no response at i :${i}`)
-        }
-        console.log(`done iteration i:${i}`)
-        let endTime = new Date().getTime();
+        // if (!modelResponse) {
+        //     console.log(`no response at i :${i}`)
+        // }
+        // console.log(`done iteration i:${i}`)
+        // let endTime = new Date().getTime();
 
-        console.log(`${endTime-startTime}\n`);
-    }
+        //console.log(`${endTime-startTime}\n`);
+    
         
 
         // if (!modelResponse) {
@@ -85,20 +85,20 @@ router.post("/predict", authMiddleware, getPatientID, generateXrayID, uploadWith
         //     })
         // }
 
-        // const analyzedFilename = `${req.xID}-analyzed.png`;
-        // const getAnalyzedDir = path.resolve("public/images/analyzed");
-        // const analyzedPath = path.join(getAnalyzedDir, analyzedFilename);
+        const analyzedFilename = `${req.xID}-analyzed.png`;
+        const getAnalyzedDir = path.resolve("public/images/analyzed");
+        const analyzedPath = path.join(getAnalyzedDir, analyzedFilename);
 
-        // await fs.promises.writeFile(analyzedPath, modelResponse.data);
+        await fs.promises.writeFile(analyzedPath, modelResponse.data);
 
-        // await prisma.xRay.update({
-        //     where: { xrayId: req.xID },
-        //     data: {
-        //         analyzedPath: analyzedPath
-        //     }
-        // })
+        await prisma.xRay.update({
+            where: { xrayId: req.xID },
+            data: {
+                analyzedPath: analyzedPath
+            }
+        })
 
-        // return res.sendFile(analyzedPath);
+        return res.sendFile(analyzedPath);
 
     } catch (err) {
         console.error("Error occurred: ", err);

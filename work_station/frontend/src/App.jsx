@@ -6,7 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import RegisterPatient from "./pages/RegisterPatient";
 import UploadImages from "./pages/UploadImages"; // ✅ import added
 import PatientView from "./pages/PatientView";
-
+import XrayView from "./pages/XrayView";
+import Reports from "./pages/Reports";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route path="/patient-details" element={<RegisterPatient />} />
         <Route path="/get-images/:id?" element={<UploadImages />} /> {/* ✅ new route */}
         <Route path="/patient/:id/:name" element={<PatientView />} />
-
+        <Route path="/XrayView/:id/:name/:xrayID" element={<XrayView />} />
+        <Route path="/reports" element={<Reports />} />
       </Routes>
     </BrowserRouter>
   );

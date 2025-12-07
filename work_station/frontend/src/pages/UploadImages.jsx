@@ -2,8 +2,8 @@ import { useState } from "react";
 import Button from "../components/Button";
 import "../styles/UploadImages.css";
 import axios from "axios";
-
-
+import { useParams } from "react-router-dom";
+import Loader from "../components/Loader"
 export default function UploadImages() {
   const id = useParams();
   const [image, setImage] = useState(null);
